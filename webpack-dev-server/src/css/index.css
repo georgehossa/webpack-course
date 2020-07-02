@@ -1,8 +1,9 @@
 body {
   display: flex;
-  background: gold;
+  background: rgb(153, 0, 255);
   align-items: center;
   justify-content: center;
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }

@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const webpack =require('webpack');
 const path = require('path');
 
 // Use Common JS
@@ -15,26 +16,37 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.html$/,
         use: [
           {
-            loader: MiniCSSExtractPlugin.loader
-          },
+            loader: 'html-loader',
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
           'css-loader'
         ]
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack Dev Server',
-    }),
-    new MiniCSSExtractPlugin({
-      filename: 'css/[name].css',
-    }),
-  ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 9000,
-  }
+    hot: true,
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Webpack Dev Server',
+      template: './index.html',
+    }),
+    // esta forma de cargar los estilos se usa para el modo producción, en dev es mejor usar el style-loader
+    /* new MiniCSSExtractPlugin({
+      filename: 'css/[name].css',
+    }), */
+  ],
+
 }
